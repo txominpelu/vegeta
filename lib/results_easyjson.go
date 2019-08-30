@@ -161,5 +161,15 @@ func (r jsonResult) encode(out *jwriter.Writer) {
 		}
 		out.Base64Bytes(r.Body)
 	}
+	{
+		const prefix string = ",\"headers\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Base64Bytes(r.Headers)
+	}
 	out.RawByte('}')
 }

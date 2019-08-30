@@ -3,6 +3,7 @@ package vegeta
 import (
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -367,6 +368,9 @@ func (a *Attacker) hit(tr Targeter, name string) *Result {
 	if res.Code = uint16(r.StatusCode); res.Code < 200 || res.Code >= 400 {
 		res.Error = r.Status
 	}
+
+	jsonString, err := json.Marshal(r.Header)
+	res.Headers = jsonString
 
 	return &res
 }
